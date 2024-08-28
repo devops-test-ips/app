@@ -6,7 +6,9 @@
 * */
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 require('dotenv').config();
+require('./middleware/PassportConfig');
 const bodyParser= require('body-parser');
 
 
@@ -18,6 +20,15 @@ const UserRoute = require('./routes/UserRoute');
 // =========================================
 
 const app = express();
+
+app.use(session({
+    /**/
+}))
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
@@ -35,3 +46,4 @@ app.get('/test',(req,res)=>{
 
 app.use('/api/v1/customers',CustomerRoute);
 app.use('/api/v1/users',UserRoute);
+app.use('/auth',require('./routes/Auth'));
