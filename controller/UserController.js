@@ -7,13 +7,19 @@ const secret = process.env.SECRET;
 
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
+    service:'gmail',
     port: process.env.EMAIL_PORT,
     secure: false,
     auth: {
         user: process.env.EMAIL_USER,
-        password: process.env.EMAIL_PASSWORD
-    }
+        pass: process.env.EMAIL_PASSWORD
+    },
+    tls: {
+        // do not fail on invalid certs
+        rejectUnauthorized: false,
+    },
 });
+console.log(transporter);
 
 const signup = async (req, resp) => {
     //console.log(req.body);
